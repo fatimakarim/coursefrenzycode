@@ -52,9 +52,9 @@ export class WishlistCoursesComponent implements OnInit {
   removeFromWishlist(index, course_id) {
     console.log(index);
     console.log(course_id);
-    swal({
+     swal.fire({
       title: 'Are you sure you want to remove this course from wishlist? <br> You will not be able to revert this!',
-      type: 'question',
+      type: 'warning',
       showCancelButton: true,
       width: '512px',
       confirmButtonColor: '#3085d6',
@@ -81,7 +81,7 @@ export class WishlistCoursesComponent implements OnInit {
 
 
   removeFromWishlistSuccess() {
-    swal({
+     swal.fire({
       type: 'success',
       title: 'Course Removed From Wishlist Successfully',
       showConfirmButton: false,
@@ -91,7 +91,7 @@ export class WishlistCoursesComponent implements OnInit {
   }
 
   removeFromWishlistError() {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Oops <br> Failed to remove from wishlist!',
       // text: 'Failed to approve course!',

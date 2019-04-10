@@ -23,7 +23,27 @@ export class BuyNowService  {
         }
       });
   }
-  
+  public emptyCart: boolean;
+  totalcarts;
+  getcart(){
+    
+      // alert('calling Checkout Courses');
+      this.obj.get_checkout_courses().subscribe(response => {
+        if(response.hasOwnProperty("status")) {
+          this.emptyCart = response.status;
+          this.GlobalCartCourses = [];
+
+          // alert('Checkout Courses are Empty')
+        }
+        else {
+          this.GlobalCartCourses = response;
+          this.totalcarts=response.totalItems
+          this.global.getGolbalCartCourses(this.GlobalCartCourses);
+          this.emptyCart = false;
+        }
+      });
+   
+  }
   public buyNow(index, course_id,Logedin): void {
     if (Logedin === '1') {
       this.obj.add_to_cart_no_promo(course_id).subscribe(
@@ -35,7 +55,7 @@ export class BuyNowService  {
           }
           else {
             this.GlobalCartCourses.push(data[0]['json'].json());
-            this.global.getGolbalCartCourses(this.GlobalCartCourses);
+          this.getcart();
             BuyNowService.buySuccess();
             this.nav.navigate(['/checkout']);
           }
@@ -54,7 +74,7 @@ export class BuyNowService  {
 
 
   static buySuccess() {
-    swal({
+     swal.fire({
       type: 'success',
       title: 'Success! <br> Pay for the course and purchase it!',
       showConfirmButton: false,
@@ -64,7 +84,7 @@ export class BuyNowService  {
   }
 
   static buyError() {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Oops <br> Failed to add to Cart!',
       showConfirmButton: false,
@@ -73,7 +93,7 @@ export class BuyNowService  {
     })
   }
   static AlreadyInCartError() {
-    swal({
+     swal.fire({
       type: 'warning',
       title: 'Oops! <br> This course already exists in your cart!',
       showConfirmButton: false,
@@ -82,7 +102,7 @@ export class BuyNowService  {
     })
   }
   static Authenticat() {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Authentication Required <br> Please Login or Signup first',
       showConfirmButton: false,

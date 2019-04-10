@@ -182,7 +182,7 @@ export class GlobalService {
 
   getGolbalCartCourses(data: any) {
     this.GlobalCartCourses.next(data);
-    // console.log('get catec ',data)
+    console.log('get catec ',data)
   }
 
   getemptyWishlistGlobal(data: any) {

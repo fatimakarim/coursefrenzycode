@@ -117,8 +117,53 @@ export class BuynowDialogComponent implements OnInit {
     }
     }
   onSubmit() {
-   
-    this.obj.coursepayment( this.model.cardNumber.split('-').join(''), this.model.expirationdate.split('/').join(''),this.model.cardcod,this.var_get_id,this.data.course_id,this.model.cardtype,this.model.holdername).subscribe();
+    if(this.isright){
+      this.obj.coursepayment(this.isright,this.model.cardNumber.split('-').join(''), this.model.expirationdate.split('/').join(''),this.model.cardcod,this.var_get_id,this.data.course_id,this.model.cardtype,this.model.holdername).subscribe( data => {
+       
+        if(data.status==false){
+           swal.fire({
+            type: 'error',
+            title: 'Oops <br> Something Went Worng!',
+            // text: 'Failed to approve course!',
+            showConfirmButton: false,
+            width: '512px',
+            timer: 2500
+          })
+        }else{
+           swal.fire({
+            type: 'success',
+            title: 'Payment Successfully Done',
+            showConfirmButton: false,
+            width: '512px',
+            timer: 2500
+          })
+        }
+      });
+      
+    }else if(!this.isright){
+      this.obj.coursepayment(this.isright,this.model.cardNumber, this.model.expirationdate,this.model.cardcod,this.var_get_id,this.data.course_id,this.model.cardtype,this.model.holdername).subscribe(data => {
+        if(data.status==false){
+           swal.fire({
+            type: 'error',
+            title: 'Oops <br> Something Went Worng!',
+            // text: 'Failed to approve course!',
+            showConfirmButton: false,
+            width: '512px',
+            timer: 2500
+          })
+        }else{
+           swal.fire({
+            type: 'success',
+            title: 'Payment Successfully Done',
+            showConfirmButton: false,
+            width: '512px',
+            timer: 2500
+          })
+        }
+      });
+      
+    }
+  
    
 }
   onNoClick(): void {

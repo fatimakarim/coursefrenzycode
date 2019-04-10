@@ -62,7 +62,7 @@ export class AdminFaqsComponent implements OnInit{
 
   deleteFaq(index, id) {
     console.log(id);
-    swal({
+     swal.fire({
       title: 'Are you sure you want to delete this FAQ? <br> You will not be able to revert this!',
       type: 'question',
       showCancelButton: true,
@@ -93,7 +93,7 @@ export class AdminFaqsComponent implements OnInit{
 
   deleteFaqSuccess()
   {
-    swal({
+     swal.fire({
       type: 'success',
       title: 'FAQ Deleted Successfully',
       showConfirmButton: false,
@@ -104,7 +104,7 @@ export class AdminFaqsComponent implements OnInit{
 
   deleteFaqError()
   {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Error <br> Failed to delete FAQ!',
       // text: 'Failed to approve course!',
@@ -156,7 +156,7 @@ export class AddFaqDialog implements OnInit {
   }
 
   addSuccess() {
-    swal({
+     swal.fire({
       type: 'success',
       title: 'Success! <br> FAQ added successfully',
       showConfirmButton: false,
@@ -166,7 +166,7 @@ export class AddFaqDialog implements OnInit {
   }
 
   addError() {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Oops! <br> Failed to add FAQ!',
       showConfirmButton: false,
@@ -221,7 +221,7 @@ export class EditFaqComponent implements OnInit {
   }
 
   editSuccess() {
-    swal({
+     swal.fire({
       type: 'success',
       title: 'Success! <br> FAQ added successfully',
       showConfirmButton: false,
@@ -231,7 +231,7 @@ export class EditFaqComponent implements OnInit {
   }
 
   editError() {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Oops! <br> Failed to add FAQ!',
       showConfirmButton: false,

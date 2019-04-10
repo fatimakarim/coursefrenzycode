@@ -54,6 +54,12 @@ export class SignUpComponent implements OnInit {
     Validators.minLength(8),
     Validators.maxLength(30)
   ]);
+  confirmPasswordFormControl= new FormControl('', [
+    Validators.required,
+    Validators.pattern(this.password_regex),
+    Validators.minLength(8),
+    Validators.maxLength(30)
+  ]);
 
   captchaFormControl = new FormControl('', [
     Validators.required]);
@@ -110,7 +116,7 @@ export class SignUpComponent implements OnInit {
     else{
       this.captcha.resetImg();
            
-            swal({
+             swal.fire({
               type: 'error',
               title: 'Please confirm you are not a robot!',
               showConfirmButton: false,
@@ -124,15 +130,15 @@ export class SignUpComponent implements OnInit {
   }
 
   usernameError() {
-    swal({
+     swal.fire({
       type: 'error',
-      title: 'Failed to Sign Up! <br> User name already exists!',
+      title: 'Failed to Sign Up! <br> Username already exists!',
       width: '512px'
     })
   }
 
   emailError() {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Failed to Sign Up! <br> Email already registered',
       width: '512px'
@@ -173,7 +179,7 @@ export class SignUpComponent implements OnInit {
   }
 
   emailVerificationError() {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Oops! <br> Email alreday registered',
       showConfirmButton: false,
@@ -183,9 +189,9 @@ export class SignUpComponent implements OnInit {
   }
 
   usernameVerificationError() {
-    swal({
+     swal.fire({
       type: 'error',
-      title: 'Oops! <br> User name already exists!',
+      title: 'Oops! <br> Username already exists!',
       showConfirmButton: false,
       width: '512px',
       timer: 2500
@@ -193,7 +199,7 @@ export class SignUpComponent implements OnInit {
   }
 
   showSuccess() {
-    swal({
+     swal.fire({
       type: 'success',
       // title: 'Welcome to CourseFrenzy! <br> Please Vrify email and Sign In to Proceed',
       title: 'Please check your inbox for verification code. Enter that code below to continue the CourseFrenzy Signup Process.',
@@ -204,7 +210,7 @@ export class SignUpComponent implements OnInit {
   }
 
   showError() {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Failed to Signup! <br> Incorrect Information',
       width: '512px'

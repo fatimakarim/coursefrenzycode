@@ -336,7 +336,7 @@ export class AddEventComponent implements OnInit {
   }
 
   EventSuccess() {
-    swal({
+     swal.fire({
       type: 'success',
       title: 'Success! <br> Event Added!',
       showConfirmButton: false,

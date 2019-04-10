@@ -42,7 +42,7 @@ export class AuthGuard implements CanActivate {
   }
 
   loginMessage() {
-    swal({
+     swal.fire({
       type: 'warning',
       title: 'Authentication required <br> Please Login or Signup first.',
       showConfirmButton: false,

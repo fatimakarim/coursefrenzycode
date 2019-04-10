@@ -34,7 +34,7 @@ export class EmailActivationComponent implements OnInit {
       });
   }
   static EmailActivationSuccess() {
-    swal({
+     swal.fire({
       type: 'success',
       title: 'Email Conformed! <br> Thanks For Conformation your Email. Click Bellow Button to Subscribe Courses.',
       width: '512px'
@@ -42,7 +42,7 @@ export class EmailActivationComponent implements OnInit {
   }
 
   static EmailActivationFailure() {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Oops! <br>Failed To Activate Email! Click link Bellow to Resend Email.',
       showConfirmButton: false,

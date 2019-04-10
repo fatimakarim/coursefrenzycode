@@ -120,7 +120,7 @@ export class AddReviewDialogComponent implements OnInit {
   }
 
   static CourseSuccess() {
-    swal({
+     swal.fire({
       type: 'success',
       title: 'Course Added Successfully! <br> Request is sent to admin you will be notified after approval.',
       width: '512px'
@@ -128,7 +128,7 @@ export class AddReviewDialogComponent implements OnInit {
   }
 
   static CourseFailure() {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Oops! <br>Failed to add course. Inccorrect Information!',
       showConfirmButton: false,
@@ -138,7 +138,7 @@ export class AddReviewDialogComponent implements OnInit {
   }
 
   static greaterDiscout() {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Please review form! <br>Discount amount can not be greater than course price!',
       // showConfirmButton: false,

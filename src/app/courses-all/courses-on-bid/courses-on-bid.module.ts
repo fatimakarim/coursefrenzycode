@@ -9,7 +9,6 @@ import {LoaderModule} from "../../loader/loader.module";
 // import {NgbModule, NgbRatingConfig} from '@ng-bootstrap/ng-bootstrap';
 import {RatingModule} from "ng2-rating";
 import { SlickModule } from 'ngx-slick';
-import {BiddingDialogComponent} from '../../bidding-dialog/bidding-dialog.component';
 
 const bidCoursesRoutes: Routes = [
   { path: '', component: CoursesOnBidComponent }
@@ -39,7 +38,6 @@ const bidCoursesRoutes: Routes = [
   providers: [],
   exports: [CoursesOnBidComponent],
   entryComponents: [
-    // BiddingDialogComponent
   ]
 })
 

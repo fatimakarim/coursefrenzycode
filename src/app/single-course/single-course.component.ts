@@ -11,7 +11,6 @@ import { Config } from '../Config';
 import { BiddingDialogComponent } from "../bidding-dialog/bidding-dialog.component";
 import { isPlatformBrowser } from "@angular/common";
 import swal from 'sweetalert2';
-import { AddCartDialogComponent } from "../cart-dialog/add-cart-dialog.component";
 import { SingleCourseGlobalService } from "../singleCourse.global.service";
 import { HttpClient } from "@angular/common/http";
 import { VideoShowDialogComponent } from "./video-show-dialog/video-show-dialog.component";
@@ -19,7 +18,8 @@ import { AddReviewDialogComponent } from "./add-review-dialog/add-review-dialog.
 import { CoursesService } from "../course/courses.service";
 import { MessagesService } from "../Messages.service";
 import { FollowUnfollowService } from "../Follow-Unfollow.service";
-// import {NgbRatingConfig} from '@ng-bootstrap/ng-bootstrap';
+import { BuynowDialogComponent } from '../buynow-dialog/buynow-dialog.component';
+import { AcceptOfferDialogComponent } from '../accept-offer-dialog/accept-offer-dialog.component';
 
 declare const $: any;
 
@@ -40,6 +40,24 @@ export class SingleCourseComponent implements OnInit, OnDestroy {
     { value: 'Turkish', viewValue: 'Turkish' },
     { value: 'Arabic', viewValue: 'Arabic' }
   ];
+  AcceptDialog(id): void {
+    if (this.Logedin == '1') {
+      const dialogRef = this.dialog.open(AcceptOfferDialogComponent, {
+        width: '500px',
+        data: { id: id }
+      });
+    } else {
+       swal.fire({
+        type: 'error',
+        title: 'Authentication Required <br> Please Login or Signup first',
+        showConfirmButton: false,
+        width: '512px',
+        timer: 1500
+      });
+      this.nav.navigate(['login']);
+    }
+
+  }
   public GlobalWishListCourses: any;
   public GlobalCartCourses: any = [];
   public alreadyInCartStatus: any;
@@ -313,7 +331,7 @@ this.totallectures=response['Total Lectures'];
   }
 
   static publishSuccess() {
-    swal({
+     swal.fire({
       type: 'success',
       title: 'Success! <br> Course Publish Request Sent to Admin!',
       showConfirmButton: false,
@@ -323,7 +341,7 @@ this.totallectures=response['Total Lectures'];
   }
 
   static publishError() {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Oops! <br> Failed to send publish course request!',
       showConfirmButton: false,
@@ -513,7 +531,7 @@ this.totallectures=response['Total Lectures'];
     //   
     }else if(this.my_vedio== false){
       if(SetVideoURL==false){
-        swal({
+         swal.fire({
           type: 'error',
           title: 'Oops! <br> Please bought this course first!',
           showConfirmButton: false,
@@ -535,30 +553,96 @@ this.totallectures=response['Total Lectures'];
     
 
   }
-  noPromo() {
-    this.obj.add_to_cart_no_promo(this.CourseId).subscribe(
-      data => {
-        // console.log(data[0]['json'].json());
-        if (data[0]['json'].json().hasOwnProperty("status")) {
-          this.alreadyInCartStatus = true;
-          // AddCartDialogComponent.AlreadyInCartError();
-          // this.dialogRef.close();
+  public emptyCart: boolean;
+  totalcarts;
+  getcart(){
+    
+      // alert('calling Checkout Courses');
+      this.obj3.get_checkout_courses().subscribe(response => {
+        if(response.hasOwnProperty("status")) {
+          this.emptyCart = response.status;
+          this.GlobalCartCourses = [];
+
+          // alert('Checkout Courses are Empty')
         }
         else {
-          this.GlobalCartCourses.push(data[0]['json'].json());
+          this.GlobalCartCourses = response;
+          this.totalcarts=response.totalItems
           this.global.getGolbalCartCourses(this.GlobalCartCourses);
-          // AddCartDialogComponent.CartSuccess();
-          // this.dialogRef.close();
+          this.emptyCart = false;
         }
-      },
-      error => {
-        // console.log(error);
-        // AddCartDialogComponent.CartError();
-      }
-    );
+      });
+   
+  }
+  // noPromo() {
+  //   this.obj.add_to_cart_no_promo(this.CourseId).subscribe(
+  //     data => {
+  //       // console.log(data[0]['json'].json());
+  //       if (data[0]['json'].json().hasOwnProperty("status")) {
+  //         this.alreadyInCartStatus = true;
+  //         // AddCartDialogComponent.AlreadyInCartError();
+  //         // this.dialogRef.close();
+  //       }
+  //       else {
+  //         this.GlobalCartCourses.push(data[0]['json'].json());
+  //         this.getcart();
+  //         // AddCartDialogComponent.CartSuccess();
+  //         // this.dialogRef.close();
+  //       }
+  //     },
+  //     error => {
+  //       // console.log(error);
+  //       // AddCartDialogComponent.CartError();
+  //     }
+  //   );
+  // }
+  buyNowClick(index, course_id): void {
+    if(this.Logedin === '1'){
+    this.obj3.buyNowcheck(index, course_id,this.Logedin).subscribe(
+      data => {
+        // alert(data.message)
+       if(this.Logedin === '1' && data.message=="Course is already in your My Courses"){
+         swal.fire({
+          type: 'error',
+          title: 'You Already Bought this course',
+          showConfirmButton: false,
+          width: '512px',
+          timer: 1500
+        });
+       }
+    else if (this.Logedin === '1' && data.message != "Course is already in your My Courses") {
+      const dialogRef = this.dialog.open(BuynowDialogComponent, {
+        width: '500px',
+        data: { course_id: course_id,
+          // CourseDetail: this.Courses
+        }
+      });
+    } else {
+     
+         swal.fire({
+          type: 'error',
+          title: 'Authentication Required <br> Please Login or Signup first',
+          showConfirmButton: false,
+          width: '512px',
+          timer: 1500
+        });
+      
+      this.nav.navigate(['login']);
+    }})}
+    else{
+       swal.fire({
+        type: 'error',
+        title: 'Authentication Required <br> Please Login or Signup first',
+        showConfirmButton: false,
+        width: '512px',
+        timer: 1500
+      });
+    
+    this.nav.navigate(['login']);
+    }
   }
   deletdeVideo(chapter_index, video_index, video_id) {
-    swal({
+     swal.fire({
       title: 'Are you sure you want to delete this video? <br> This Video Will be Deleted Permanently. <br> You will not be able to revert this!',
       type: 'question',
       showCancelButton: true,
@@ -583,7 +667,7 @@ this.totallectures=response['Total Lectures'];
   }
 
   static deleteVideoSuccess() {
-    swal({
+     swal.fire({
       type: 'success',
       title: 'Video Deleted Successfully!',
       showConfirmButton: false,
@@ -593,7 +677,7 @@ this.totallectures=response['Total Lectures'];
   }
 
   static deleteVideoError() {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Oops! <br> Failed to send request',
       // text: 'Failed to approve course!',
@@ -604,7 +688,7 @@ this.totallectures=response['Total Lectures'];
   }
 
   deletdeChapter(index, chapter_id) {
-    swal({
+     swal.fire({
       title: 'Are you sure you want to delete this Chapter? <br> All Video in this Chapter will be deleted <br> You will not be able to revert this!',
       type: 'question',
       showCancelButton: true,
@@ -629,7 +713,7 @@ this.totallectures=response['Total Lectures'];
   }
 
   static deleteSuccess() {
-    swal({
+     swal.fire({
       type: 'success',
       title: 'Chapter Deleted Successfully!',
       showConfirmButton: false,
@@ -639,7 +723,7 @@ this.totallectures=response['Total Lectures'];
   }
 
   static deleteError() {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Oops! <br> Failed to send request',
       // text: 'Failed to approve course!',
@@ -748,21 +832,21 @@ this.totallectures=response['Total Lectures'];
     }
   }
 
-  openCartDialog(): void {
-    if (this.Logedin === '1') {
-      const dialogRef = this.dialog.open(AddCartDialogComponent, {
-        width: '500px',
-        data: { course_id: this.CourseId }
-      });
-    } else {
-      SingleCourseComponent.Authenticat();
-      this.router.navigate(['login']);
-    }
-  }
+  // openCartDialog(): void {
+  //   if (this.Logedin === '1') {
+  //     const dialogRef = this.dialog.open(AddCartDialogComponent, {
+  //       width: '500px',
+  //       data: { course_id: this.CourseId }
+  //     });
+  //   } else {
+  //     SingleCourseComponent.Authenticat();
+  //     this.router.navigate(['login']);
+  //   }
+  // }
 
 
   static Authenticat() {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Authentication Required <br> Please Login or Singup first',
       // text: '',
@@ -814,29 +898,114 @@ this.totallectures=response['Total Lectures'];
     node.type = 'text/javascript';
     document.getElementsByTagName('head')[0].appendChild(node);
   }
+  public wishlistCourses: any=[];
+  public emptyWishlist: boolean;
 
-  openDialogAddToCart(course_id): void {
+  openDialogAddToCart(index, course_id): void {
     if (this.Logedin === '1') {
-      const dialogRef = this.dialog.open(AddCartDialogComponent, {
-        width: '500px',
-        data: {
-          course_id: course_id,
-          // CourseDetail: this.Courses
-        }
-      });
+      this.obj.add_to_cart_no_promo(course_id).subscribe(
+        data => {
+          // console.log(data[0]['json'].json());
+          if(data[0]['json'].json().hasOwnProperty("status")) {
+         
+             swal.fire({
+              type: 'warning',
+              title: 'Oops! <br> This course already exists in your cart!',
+              showConfirmButton: false,
+              width: '512px',
+              timer: 2500
+            })
+          
+          } else {
+            this.wishlistCourses.splice(this.wishlistCourses.indexOf(this.wishlistCourses[index]),1);
+            // this.GlobalCartCourses.push(data[0]['json'].json());
+            this.getcart();
+             swal.fire({
+              type: 'success',
+              title: 'Success <br> Course Added to Cart!',
+              showConfirmButton: false,
+              width: '512px',
+              timer: 2500
+            })
+         
+            this.obj3.removeFromWishlist(course_id).subscribe(
+              data => {
+                console.log(data);
+                // this.wishlistCourses.splice(this.wishlistCourses.indexOf(this.wishlistCourses[index]),1);
+                // console.log(this.wishlistCourses);
+                // if (this.Logedin === '1') {
+                this.obj3.get_wishlist_courses(1).subscribe(response => {
+                  if(!response.status){
+  
+                  }
+                  if(response.hasOwnProperty("status")) {
+                    this.wishlistCourses = [];
+                    this.emptyWishlist = true;
+                  }
+                  else {
+                    this.wishlistCourses = response;
+                    // alert('total Wishlist Courses' + this.wishlistCourses.length);
+                    this.global.getGolbalWishListCourses(this.wishlistCourses);
+                    this.emptyWishlist = false;
+                  }
+  
+                });
+                // }
+              });
+          }
+  
+        },
+        error => {
+          // console.log(error);
+       
+             swal.fire({
+              type: 'error',
+              title: 'Oops <br> Failed to add to Cart!',
+              showConfirmButton: false,
+              width: '512px',
+              timer: 2500
+            })
+          }
+       
+      );
+  
     } else {
       SingleCourseComponent.Authenticat();
       this.nav.navigate(['login']);
     }
   }
+  // openDialogAddToCart(course_id): void {
+  //   if (this.Logedin === '1') {
+  //     const dialogRef = this.dialog.open(AddCartDialogComponent, {
+  //       width: '500px',
+  //       data: {
+  //         course_id: course_id,
+  //         // CourseDetail: this.Courses
+  //       }
+  //     });
+  //   } else {
+  //     SingleCourseComponent.Authenticat();
+  //     this.nav.navigate(['login']);
+  //   }
+  // }
 
-  onclick(course_id) {
+  onclick(index,course_id,inwhishlist) {
     if (this.Logedin === '1') {
+      
+        if(inwhishlist=='true'){
+          SingleCourseComponent.AlreadyInWishlistError();
+        }else{
       this.obj3.add_wishlist(course_id).subscribe(
         data => {
           // console.log(data[0]['json'].json());
           if (data[0]['json'].json().hasOwnProperty("status")) {
-            SingleCourseComponent.AlreadyInWishlistError();
+             swal.fire({
+              type: 'warning',
+              title: 'Oops! <br> This course already exists in your courses!',
+              showConfirmButton: false,
+              width: '512px',
+              timer: 2500
+            })
           }
           else {
             this.GlobalWishListCourses.push(data[0]['json'].json());
@@ -848,7 +1017,7 @@ this.totallectures=response['Total Lectures'];
         error => {
           // console.log(error);
         }
-      );
+      );}
     }
     else {
       SingleCourseComponent.Authenticat();
@@ -857,7 +1026,7 @@ this.totallectures=response['Total Lectures'];
   }
 
   static AlreadyInWishlistError() {
-    swal({
+     swal.fire({
       type: 'warning',
       title: 'Oops! <br> This course already exists in your wishlist!',
       showConfirmButton: false,
@@ -867,7 +1036,7 @@ this.totallectures=response['Total Lectures'];
   }
 
   static wishlistSuccess() {
-    swal({
+     swal.fire({
       type: 'success',
       title: 'Success! <br> Successfuly added to wishlist.',
       showConfirmButton: false,
@@ -923,7 +1092,7 @@ export class AddChapterComponent {
   }
 
   static chapterSuccess() {
-    swal({
+     swal.fire({
       type: 'success',
       title: 'Success! <br> New Chapter Added!',
       showConfirmButton: false,
@@ -933,7 +1102,7 @@ export class AddChapterComponent {
   }
 
   static chapterError() {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Oops! <br> Failed to add new chapter!',
       showConfirmButton: false,
@@ -994,7 +1163,7 @@ export class EditChapterComponent implements OnInit {
   }
 
   static editChapterSuccess() {
-    swal({
+     swal.fire({
       type: 'success',
       title: 'Success! <br> Chapter name edited successfully!',
       showConfirmButton: false,
@@ -1004,7 +1173,7 @@ export class EditChapterComponent implements OnInit {
   }
 
   static editChapterError() {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Oops! <br> Failed to edit chapter name',
       showConfirmButton: false,
@@ -1142,7 +1311,7 @@ export class EditdemoComponent {
 
 
   static videoSuccess() {
-    swal({
+     swal.fire({
       type: 'success',
       title: 'Success <br> New Video added!',
       showConfirmButton: false,
@@ -1152,7 +1321,7 @@ export class EditdemoComponent {
   }
 
   static videoError() {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Oops! <br> Failed to add Video!',
       showConfirmButton: false,
@@ -1290,7 +1459,7 @@ export class AddVideoComponent {
 
 
   static videoSuccess() {
-    swal({
+     swal.fire({
       type: 'success',
       title: 'Success <br> New Video added!',
       showConfirmButton: false,
@@ -1300,7 +1469,7 @@ export class AddVideoComponent {
   }
 
   static videoError() {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Oops! <br> Failed to add Video!',
       showConfirmButton: false,
@@ -1358,7 +1527,7 @@ export class PublishCourseComponent {
   }
 
   static publishSuccess() {
-    swal({
+     swal.fire({
       type: 'success',
       title: 'Success! <br> Course Publish Request Sent to Admin!',
       showConfirmButton: false,
@@ -1368,7 +1537,7 @@ export class PublishCourseComponent {
   }
 
   static publishError() {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Oops! <br> Failed to send publish course request!',
       showConfirmButton: false,
@@ -1471,7 +1640,7 @@ export class IntroVideoComponent {
       data => {
         var mess=data['message']
         if(mess=="Video Already Exists."){
-          swal({
+           swal.fire({
             type: 'error',
             title: 'Oops! <br> Video Already Exists.',
             showConfirmButton: false,
@@ -1516,7 +1685,7 @@ export class IntroVideoComponent {
 
 
   static videoSuccess() {
-    swal({
+     swal.fire({
       type: 'success',
       title: 'Success <br> New Video added!',
       showConfirmButton: false,
@@ -1526,7 +1695,7 @@ export class IntroVideoComponent {
   }
 
   static videoError() {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Oops! <br> Failed to add Video!',
       showConfirmButton: false,

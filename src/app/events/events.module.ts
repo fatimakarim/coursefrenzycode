@@ -7,7 +7,7 @@ import { AddEventComponent } from './events.component';
 import { MatDialogModule } from '@angular/material';
 import {MatDatepickerModule} from '@angular/material';
 import { ImageCropperModule } from 'ngx-image-cropper';
-import {MatInputModule} from '@angular/material';
+import {MatInputModule,MatNativeDateModule} from '@angular/material';
 import { AgmCoreModule } from '@agm/core';
 import { MapsAPILoader } from '@agm/core';
 import {LoaderModule} from "../loader/loader.module";
@@ -33,7 +33,7 @@ const eventsRoutes: Routes = [
     MatDatepickerModule,
     // OwlDateTimeModule,
     // OwlNativeDateTimeModule,
-    ImageCropperModule,
+    ImageCropperModule,MatNativeDateModule,
     MatInputModule,
     AgmCoreModule,
     RouterModule.forChild(eventsRoutes),

@@ -9,15 +9,16 @@ import {BiddingDialogComponent} from '../bidding-dialog/bidding-dialog.component
 import {ActivatedRoute, Router} from '@angular/router';
 import {MatDialog,MatDialogRef} from '@angular/material';
 import { BuyNowService } from '../BuyNow.service';
-import { AddCartDialogComponent } from '../cart-dialog/add-cart-dialog.component';
 import {NgForm} from '@angular/forms';
 import {FormControl, NgModel, Validators, ReactiveFormsModule} from '@angular/forms';
 import {HeaderService} from '../header/header.service';
 import {SimpleGlobal} from "ng2-simple-global";
 import { BuynowDialogComponent } from '../buynow-dialog/buynow-dialog.component';
+import { AcceptOfferDialogComponent } from '../accept-offer-dialog/accept-offer-dialog.component';
+import {CourseCheckoutService} from "../course-checkout/course-checkout.service";
 
 // import { HomeSliderEidtDialogComponent } from './.component';
-declare const $: any;
+// declare const $: any;
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -50,7 +51,51 @@ export class HomeComponent implements OnInit, OnDestroy {
   public heartClass= 'fa fa-heart-o';
   public data:any;
   public GlobalWishListCourses: any= [];
- public slideConfig;
+  public slideConfig;
+ public slide:{
+  infinite: true,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+  autoplay: true,
+  dots: false,
+  prevArrow: '<button class="leftRs">&lt;</button>',
+  nextArrow: '<button class="rightRs">&lt;</button>',
+  responsive: [
+    {
+      breakpoint: 1025,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        infinite: true
+      }
+    },
+    {
+      breakpoint: 769,
+      settings: {
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        infinite: true
+      }
+    },
+    {
+      breakpoint: 605,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 1,
+        infinite: true
+      }
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        infinite: true
+      }
+    }
+
+  ]
+ };
  public trendingNowCourses: any=[];
  private enrolled: any;
  public topRatedCourses: any;
@@ -59,12 +104,14 @@ export class HomeComponent implements OnInit, OnDestroy {
  constructor( @Inject(PLATFORM_ID) private platformId: Object, private obj: 
   HomeService,private obj_CoursesService: CoursesService,private nav: Router,
   private route: ActivatedRoute,private obj2: HeaderService, private buyNowService: BuyNowService,private dialog: MatDialog, private router: Router, 
-  private global: GlobalService,private glb_ser: SimpleGlobal) {
+  private global: GlobalService,private glb_ser: SimpleGlobal,  private obj3: CourseCheckoutService,) {
+   
+
     this.obj_CoursesService.get_all().subscribe(response => {
       this.data = response;
       // this.loaded = true;
             this.loaded = true;
-            $('.homeSlider').fadeOut(0);
+            // $('.homeSlider').fadeOut(0);
             if (this.data) {
              this.slideConfig =  {
                   infinite: true,
@@ -111,104 +158,56 @@ export class HomeComponent implements OnInit, OnDestroy {
                   ]
               };
             }
-            $('.homeSlider').fadeIn(500).delay(200);
+           
           });
 
 this.obj2.get_categories().subscribe(response => {
   this.Categories = response;
+  this.global.getCategories(this.Categories);
   // this.loaded = true;
         this.loaded = true;
-        $('.homeSlider').fadeOut(0);
-        if (this.Categories) {
-         this.slideConfig =  {
-              infinite: true,
-              slidesToShow: 5,
-              slidesToScroll: 5,
-              autoplay: false,
-              dots: false,
-              prevArrow: '<button class="leftRs">&lt;</button>',
-              nextArrow: '<button class="rightRs">&lt;</button>',
-              responsive: [
-                {
-                  breakpoint: 1025,
-                  settings: {
-                    slidesToShow: 4,
-                    slidesToScroll: 3,
-                    infinite: true
-                  }
-                },
-                {
-                  breakpoint: 769,
-                  settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 1,
-                    infinite: true
-                  }
-                },
-                {
-                  breakpoint: 605,
-                  settings: {
-                    slidesToShow: 2,
-                    slidesToScroll: 1,
-                    infinite: true
-                  }
-                },
-                {
-                  breakpoint: 480,
-                  settings: {
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                    infinite: true
-                  }
-                }
-  
-              ]
-          };
-        }
-        $('.homeSlider').fadeIn(500).delay(200);
+        this.slideConfig = {
+          infinite: true,
+          speed: 900,
+          autoplay: true,
+          slidesToShow: 5,
+          slidesToScroll: 5,
+          prevArrow: '<button class="leftRs">&lt;</button>',
+          nextArrow: '<button class="rightRs">&lt;</button>',
+          responsive: [
+            {
+              breakpoint: 1025,
+              settings: {
+                slidesToShow: 4,
+                slidesToScroll: 4,
+                infinite: true
+              }
+            },
+            {
+              breakpoint: 769,
+              settings: {
+                slidesToShow: 3,
+                slidesToScroll: 1
+              }
+            },
+            {
+              breakpoint: 605,
+              settings: {
+                slidesToShow: 2,
+                slidesToScroll: 1,
+                infinite: true
+              }
+            },
+            {
+              breakpoint: 480,
+              settings: {
+                slidesToShow: 1,
+                slidesToScroll: 1
+              }
+            }
+          ]};
       });
-//    this.obj_CoursesService.get_bid_courses(this.page).subscribe(response => {
-//       this.BidCourses = response;
-//  console.log(this.BidCourses);
-//       // console.log(this.BidCourses);
 
-//       // this.loaded = true;
-
-//     this.slideConfig = {
-//           infinite: false,
-//           speed: 900,
-//           autoplay: true,
-//           slidesToShow: 5,
-//           slidesToScroll: 5,
-//           prevArrow: '<button class="leftRs">&lt;</button>',
-//           nextArrow: '<button class="rightRs">&lt;</button>',
-//           responsive: [
-//             {
-//               breakpoint: 1025,
-//               settings: {
-//                 slidesToShow: 4,
-//                 slidesToScroll: 4,
-//                 infinite: true
-//               }
-//             },
-//             {
-//               breakpoint: 769,
-//               settings: {
-//                 slidesToShow: 3,
-//                 slidesToScroll: 1
-//               }
-//             },
-//             {
-//               breakpoint: 480,
-//               settings: {
-//                 slidesToShow: 1,
-//                 slidesToScroll: 1
-//               }
-//             }
-//     ]};
-
-//     });
- 
  
     this.global.caseNumber$.subscribe(
       data => {
@@ -232,89 +231,11 @@ this.obj2.get_categories().subscribe(response => {
             this.GlobalWishListCourses = data;
           }
         });
-
-
-
-        // this.obj_CoursesService.get_courses(1).subscribe(response => {
-        //   this.trendingNowCourses = response;
-        //   // this.loaded = true;
-        //   this.slideConfig = {
-        //     infinite: false,
-        //     speed: 900,
-        //     autoplay: true,
-        //     slidesToShow: 5,
-        //     slidesToScroll: 5,
-        //     prevArrow: '<button class="leftRs">&lt;</button>',
-        //     nextArrow: '<button class="rightRs">&lt;</button>',
-        //     responsive: [
-        //       {
-        //         breakpoint: 1025,
-        //         settings: {
-        //           slidesToShow: 4,
-        //           slidesToScroll: 4,
-        //           infinite: true
-        //         }
-        //       },
-        //       {
-        //         breakpoint: 769,
-        //         settings: {
-        //           slidesToShow: 3,
-        //           slidesToScroll: 1
-        //         }
-        //       },
-        //       {
-        //         breakpoint: 480,
-        //         settings: {
-        //           slidesToShow: 1,
-        //           slidesToScroll: 1
-        //         }
-        //       }
-        //     ]};
-        // });
-        // this.obj_CoursesService.get_top_rated_courses(1).subscribe(response => {
-        //   this.topRatedCourses = response;
-        //   // console.log("Top rated"+this.topRatedCourses['courses'].course[0]);
-        //   // this.loaded = true;
-        
-        //   this.slideConfig = {
-        //     infinite: false,
-        //     speed: 900,
-        //     autoplay: true,
-        //     slidesToShow: 5,
-        //     slidesToScroll: 5,
-        //     prevArrow: '<button class="leftRs">&lt;</button>',
-        //     nextArrow: '<button class="rightRs">&lt;</button>',
-        //     responsive: [
-        //       {
-        //         breakpoint: 1025,
-        //         settings: {
-        //           slidesToShow: 4,
-        //           slidesToScroll: 4,
-        //           infinite: true
-        //         }
-        //       },
-        //       {
-        //         breakpoint: 769,
-        //         settings: {
-        //           slidesToShow: 3,
-        //           slidesToScroll: 1
-        //         }
-        //       },
-        //       {
-        //         breakpoint: 480,
-        //         settings: {
-        //           slidesToShow: 1,
-        //           slidesToScroll: 1
-        //         }
-        //       }
-        //     ]};
-        // });
+        if (this.Logedin === '1') {
         this.obj_CoursesService.get_recommendcourse(this.page).subscribe(
           data => {
             this.Courses = data;
-            // this.glb_ser['Courses'] = this.Courses;
-            // this.loaded = true;
-        
+          
             this.slideConfig = {
               infinite: true,
               speed: 900,
@@ -366,12 +287,9 @@ this.obj2.get_categories().subscribe(response => {
               this.courses = response;
               this.showrecent = true;
               this.global.setShowRecent(true);
-              //
-              // alert(this.Courses);
-              // alert('Recent Courses Come and Length is' + this.Courses.length)
+             
             }
-            // if(response.length===)
-            // console.log(this.Courses['courses']);
+           
             this.slideConfig = {
               infinite: true,
               speed: 900,
@@ -413,45 +331,11 @@ this.obj2.get_categories().subscribe(response => {
                 }
               ]};
           
-          });
+          });}
   }
-
+  upperhome;
   ngOnInit() {
-    // Start Slider
     
-    // this.obj.get_slider_content().subscribe(response => {
-    //   this.SliderContent = response;
-    //   this.loaded = true;
-    // });
-
-
-
-    // End Slider
-
-    // Start bid_courses slider 
-  
-     // End bid_courses slider 
-// start trending-courses slider
-
-
-
-// End trending-courses slider
-
-// Start app-top-rated-courses
-
-
-// End app-top-rated-courses
-
-//  start recommended-courses
-
-
-
-
-// End recommended-courses
-
-// Start recently-viewed-courses
-
-// End recently-viewed-courses
 if (isPlatformBrowser(this.platformId)) {
       localStorage.setItem('home', 'true');
     }
@@ -476,7 +360,7 @@ if (isPlatformBrowser(this.platformId)) {
     this.global.search('1');
     // this.search = '1';
     setTimeout(function () {
-      $('#textsearch').focus();
+      // $('#textsearch').focus();
     }, 200);
   }
   isAuthenticated() {
@@ -495,31 +379,19 @@ if (isPlatformBrowser(this.platformId)) {
     if (isPlatformBrowser(this.platformId)) {
       this.Logedin = localStorage.getItem('login');
       this.global.publishData(0);
-      // if (this.Logedin == null) {
-      //   this.IsLogedIn = false;
-      // } else {
-      //   this.IsLogedIn = true;
-      // }
+      
     }
-    // alert(this.IsLogedIn);
+  
   }
-  openDialog(): void {
-    const dialogRef = this.dialog.open(HomeSliderEidtDialogComponent, {
-      width: '500px',
-      // data: {name: this.name, animal: this.animal}
-    });
-  }
-
-  // buyNowClick1(index, course_id): void {
-  //   this.buyNowService.buyNow(index, course_id,this.Logedin)
-  // }
+ 
+  
   buyNowClick(index, course_id): void {
     if(this.Logedin === '1'){
     this.obj_CoursesService.buyNowcheck(index, course_id,this.Logedin).subscribe(
       data => {
         // alert(data.message)
        if(this.Logedin === '1' && data.message=="Course is already in your My Courses"){
-        swal({
+         swal.fire({
           type: 'error',
           title: 'You Already Bought this course',
           showConfirmButton: false,
@@ -536,7 +408,7 @@ if (isPlatformBrowser(this.platformId)) {
       });
     } else {
      
-        swal({
+         swal.fire({
           type: 'error',
           title: 'Authentication Required <br> Please Login or Signup first',
           showConfirmButton: false,
@@ -547,7 +419,7 @@ if (isPlatformBrowser(this.platformId)) {
       this.nav.navigate(['login']);
     }})}
     else{
-      swal({
+       swal.fire({
         type: 'error',
         title: 'Authentication Required <br> Please Login or Signup first',
         showConfirmButton: false,
@@ -558,28 +430,110 @@ if (isPlatformBrowser(this.platformId)) {
     this.nav.navigate(['login']);
     }
   }
-
-  openDialog3(index, course_id): void {
+  public emptyCart: boolean;
+  public wishlistCourses: any=[];
+  public emptyWishlist: boolean;
+  public GlobalCartCourses: any = [];
+  totalcarts;
+  getcart(){
     if (this.Logedin === '1') {
-      const dialogRef = this.dialog.open(AddCartDialogComponent, {
-        width: '500px',
-        data: { course_id: course_id,
-          // CourseDetail: this.Courses
+      // alert('calling Checkout Courses');
+      this.obj3.get_checkout_courses().subscribe(response => {
+        if(response.hasOwnProperty("status")) {
+          this.emptyCart = response.status;
+          this.GlobalCartCourses = [];
+
+          // alert('Checkout Courses are Empty')
+        }
+        else {
+          this.GlobalCartCourses = response;
+          this.totalcarts=response.totalItems
+          this.global.getGolbalCartCourses(this.GlobalCartCourses);
+          this.emptyCart = false;
         }
       });
+    }
+  }
+  openDialog3(index, course_id): void {
+    if (this.Logedin === '1') {
+      this.obj_CoursesService.add_to_cart_no_promo(course_id).subscribe(
+        data => {
+          // console.log(data[0]['json'].json());
+          if(data[0]['json'].json().hasOwnProperty("status")) {
+         
+             swal.fire({
+              type: 'warning',
+              title: 'Oops! <br> This course already exists in your cart!',
+              showConfirmButton: false,
+              width: '512px',
+              timer: 2500
+            })
+          
+          } else {
+            this.wishlistCourses.splice(this.wishlistCourses.indexOf(this.wishlistCourses[course_id]),1);
+            console.log(data[0]['json'].json())
+            this.getcart()
+             swal.fire({
+              type: 'success',
+              title: 'Success <br> Course Added to Cart!',
+              showConfirmButton: false,
+              width: '512px',
+              timer: 2500
+            })
+         
+            this.obj_CoursesService.removeFromWishlist(course_id).subscribe(
+              data => {
+                console.log(data);
+                // this.wishlistCourses.splice(this.wishlistCourses.indexOf(this.wishlistCourses[index]),1);
+                // console.log(this.wishlistCourses);
+                // if (this.Logedin === '1') {
+                this.obj_CoursesService.get_wishlist_courses(1).subscribe(response => {
+                  if(!response.status){
+  
+                  }
+                  if(response.hasOwnProperty("status")) {
+                    this.wishlistCourses = [];
+                    this.emptyWishlist = true;
+                  }
+                  else {
+                    this.wishlistCourses = response;
+                    // alert('total Wishlist Courses' + this.wishlistCourses.length);
+                    this.global.getGolbalWishListCourses(this.wishlistCourses);
+                    this.emptyWishlist = false;
+                  }
+  
+                });
+                // }
+              });
+          }
+  
+        },
+        error => {
+          // console.log(error);
+       
+             swal.fire({
+              type: 'error',
+              title: 'Oops <br> Failed to add to Cart!',
+              showConfirmButton: false,
+              width: '512px',
+              timer: 2500
+            })
+          }
+       
+      );
+  
     } else {
-     
-        swal({
-          type: 'error',
-          title: 'Authentication Required <br> Please Login or Signup first',
-          showConfirmButton: false,
-          width: '512px',
-          timer: 1500
-        });
-      
+       swal.fire({
+        type: 'error',
+        title: 'Authentication Required <br> Please Login or Signup first',
+        showConfirmButton: false,
+        width: '512px',
+        timer: 1500
+      });
       this.nav.navigate(['login']);
     }
   }
+  
   goToTopRatedCourses() {
     this.nav.navigate(['courses/top-rated']);
   }
@@ -612,7 +566,7 @@ if (isPlatformBrowser(this.platformId)) {
   }
 
   static EnrollmentError() {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'You Already Enrolled This Course.',
       showConfirmButton: false,
@@ -621,7 +575,7 @@ if (isPlatformBrowser(this.platformId)) {
     })
   }
   static EnrollmentSuccess() {
-    swal({
+     swal.fire({
       type: 'success',
       title: 'Success! <br> Successfuly Purchased.',
       showConfirmButton: false,
@@ -629,21 +583,33 @@ if (isPlatformBrowser(this.platformId)) {
       timer: 3000,
     });
   }
-  onclick(index, course_id) {
+  onclick(index, course_id,inwhishlist) {
+   
     if (this.Logedin === '1') {
-      this.obj_CoursesService.add_wishlist(course_id).subscribe(
-        data => {
-          console.log(data);
-          if(data[0]['json'].json().hasOwnProperty("status")) {
-            HomeComponent.AlreadyInWishlistError();
+      if(inwhishlist=='true'){
+        HomeComponent.AlreadyInWishlistError();
+      }else{
+
+        this.obj_CoursesService.add_wishlist(course_id).subscribe(
+          data => {
+            console.log(data);
+            if(data[0]['json'].json().hasOwnProperty("status")) {
+               swal.fire({
+                type: 'warning',
+                title: 'Oops! <br> This course already exists in your courses!',
+                showConfirmButton: false,
+                width: '512px',
+                timer: 2500
+              })
+            }
+            else {
+              this.GlobalWishListCourses.push(data[0]['json'].json());
+              this.global.getGolbalWishListCourses(this.GlobalWishListCourses);
+              HomeComponent.wishlistSuccess();
+            }
           }
-          else {
-            this.GlobalWishListCourses.push(data[0]['json'].json());
-            this.global.getGolbalWishListCourses(this.GlobalWishListCourses);
-            HomeComponent.wishlistSuccess();
-          }
-        }
-      );
+        );
+      }
     }
     else {
       HomeComponent.Authenticat();
@@ -651,7 +617,7 @@ if (isPlatformBrowser(this.platformId)) {
     }
   }
   static AlreadyInWishlistError() {
-    swal({
+     swal.fire({
       type: 'warning',
       title: 'Oops! <br> This course already exists in your wishlist!',
       showConfirmButton: false,
@@ -661,7 +627,7 @@ if (isPlatformBrowser(this.platformId)) {
   }
 
   static wishlistSuccess() {
-    swal({
+     swal.fire({
       type: 'success',
       title: 'Success! <br> Successfuly added to wishlist.',
       showConfirmButton: false,
@@ -670,7 +636,18 @@ if (isPlatformBrowser(this.platformId)) {
       // position: 'top-end'
     });
   }
+  AcceptDialog(id): void {
+    if (this.Logedin == '1') {
+      const dialogRef = this.dialog.open(AcceptOfferDialogComponent, {
+        width: '500px',
+        data: { id: id }
+      });
+    } else {
+      HomeComponent.Authenticat();
+      this.nav.navigate(['login']);
+    }
 
+  }
 
   openDialog2(bid_id): void {
     if (this.Logedin == '1') {
@@ -686,7 +663,7 @@ if (isPlatformBrowser(this.platformId)) {
   }
 
   static Authenticat() {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Authentication Required <br> Please Login or Signup first',
       showConfirmButton: false,
@@ -702,138 +679,4 @@ if (isPlatformBrowser(this.platformId)) {
     }
   }
 }
-@Component({
-  selector: 'app-home-slider-eidt-dialog',
-  templateUrl: './home-slider-eidt-dialog.component.html',
-  styleUrls: ['../events/add-event.component.css']
-})
-export class HomeSliderEidtDialogComponent implements OnInit {
-  public model: any = {};
-  private loaded = false;
-  public SliderContent: any;
-  public ImageUrl = Config.api;
 
-
-  name: any;
-  page: number;
-  PictureCheck = false;
-  MaxPictureCheck = false;
-  ShowPictureError = false;
-  arrayIndex = 0;
-  private base64textString = '';
-  private base64textString1 = '';
-  sizeLimit = 2000000;
-  Fixed = true;
-  base64textStringforPic: any [];
-  ALLbase64textStringforPic = {0: 'dfghjk'};
-
-  Addbestoffer = false;
-  Auction = true;
-  file: any;
-  file1: any;
-  files: FileList;
-
-  clicked = false;
-  color = 'accent';
-  checked = false;
-  disabled = false;
-
-
-
-  constructor(private obj: HomeService, public dialogRef: MatDialogRef<HomeSliderEidtDialogComponent> ) { }
-
-  ngOnInit() {
-    this.obj.get_slider_content().subscribe(response => {
-      this.SliderContent = response;
-      // console.log(this.SliderContent);
-      // this.loaded = true;
-      this.model.heading = this.SliderContent.heading;
-      this.model.searchPlaceHolder = this.SliderContent.searchPlaceHolder;
-      this.model.SliderImage = this.SliderContent.SliderImage;
-    });
-  }
-
-  onSubmit(f: NgForm) {
-    this.obj.update_home_slider(3, this.model.heading, this.model.searchPlaceHolder, this.base64textString).subscribe(
-      data => {
-        // console.log(data);
-        this.dialogRef.close();
-        this.EditSuccess();
-      },
-      error => {
-        // console.log(error);
-      }
-    );
-  }
-
-  EditSuccess() {
-    swal({
-      type: 'success',
-      title: 'Edit Success <br> Changes saved into database!',
-      showConfirmButton: false,
-      width: '512px',
-      timer: 2500
-    })
-  }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-  onChange(event: EventTarget) {
-    const eventObj: MSInputMethodContext = <MSInputMethodContext> event;
-    const target: HTMLInputElement = <HTMLInputElement> eventObj.target;
-    this.files = target.files;
-    if (this.files.length >= 0 && this.files.length < 5) {
-
-      this.MaxPictureCheck = false;
-      this.file = this.files[0];
-
-      this.PictureCheck = true;
-      const reader = new FileReader();
-      reader.onload = this._handleReaderLoaded.bind(this);
-      reader.readAsBinaryString(this.file);
-
-      if (this.files.length > 0 && this.files.length < 5) {
-
-        for (let a = 1; a < (this.files.length); a++) {
-          // alert(a);
-          this.file1 = this.files[a];
-          const reader1 = new FileReader();
-          reader1.onload = (e: any) => {
-            this._handleReaderLoadedforALl(e, a - 1);
-          };
-          // this._handleReaderLoadedforALl.bind(this.file1, a-1);
-          reader1.readAsBinaryString(this.file1);
-        }
-        // console.log('Done change');
-        // console.log(this.ALLbase64textStringforPic);
-      }
-    } else {
-      this.MaxPictureCheck = true;
-    }
-
-  }
-
-  _handleReaderLoadedforALl(readerEvt, index) {
-    // console.log('attt  ',index);
-    const binaryString = readerEvt.target.result;
-    // console.log('123456');
-    // console.log('asdfghjk   ',btoa(binaryString))
-    // // this.arrayIndex=0;
-
-    this.ALLbase64textStringforPic[index] = btoa(binaryString);
-    // console.log(this.ALLbase64textStringforPic);
-    this.arrayIndex += 1;
-
-
-  }
-
-
-  _handleReaderLoaded(readerEvt) {
-    const binaryString = readerEvt.target.result;
-    this.base64textString = btoa(binaryString);
-
-  }
-
-}

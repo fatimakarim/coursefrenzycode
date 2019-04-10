@@ -109,7 +109,7 @@ export class EditBenefitsComponent implements OnInit {
 
 
   EditSuccess() {
-    swal({
+     swal.fire({
       type: 'success',
       title: 'Success! <br> Changes Saved!',
       showConfirmButton: false,

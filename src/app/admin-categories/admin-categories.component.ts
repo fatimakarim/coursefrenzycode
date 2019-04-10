@@ -110,7 +110,7 @@ export class AdminCategoriesComponent implements OnInit {
 
   static deleteCategorySuccess()
   {
-    swal({
+     swal.fire({
       type: 'success',
       title: 'Category Deleted Successfully',
       showConfirmButton: false,
@@ -121,7 +121,7 @@ export class AdminCategoriesComponent implements OnInit {
 
   static deleteCategoryError()
   {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Error <br> Failed to delete category!',
       // text: 'Failed to approve course!',
@@ -133,7 +133,7 @@ export class AdminCategoriesComponent implements OnInit {
 
   static deleteSubCategorySuccess()
   {
-    swal({
+     swal.fire({
       type: 'success',
       title: 'Sub Category Deleted Successfully',
       showConfirmButton: false,
@@ -144,7 +144,7 @@ export class AdminCategoriesComponent implements OnInit {
 
   static deleteSubCategoryError()
   {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Error <br> Failed to delete sub category!',
       // text: 'Failed to approve course!',
@@ -156,7 +156,7 @@ export class AdminCategoriesComponent implements OnInit {
 
   deleteCategory(id, index) {
     console.log(id);
-    swal({
+     swal.fire({
       title: 'Are you sure you want to delete this category? <br> You will not be able to revert this!',
       type: 'question',
       showCancelButton: true,
@@ -184,7 +184,7 @@ export class AdminCategoriesComponent implements OnInit {
 }
 
   deleteSubCategory(indexofCat, indexofSubCat, subCatId) {
-  swal({
+   swal.fire({
     title: 'Are you sure you want to delete this sub category? <br> You will not be able to revert this!',
     type: 'question',
     showCancelButton: true,
@@ -289,7 +289,7 @@ export class AddCategoryComponent implements OnInit {
   }
 
   static addSuccess() {
-    swal({
+     swal.fire({
       type: 'success',
       title: 'Success! <br> Category added successfully',
       showConfirmButton: false,
@@ -299,7 +299,7 @@ export class AddCategoryComponent implements OnInit {
   }
 
   static addError() {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Oops! <br> Failed to add category!',
       showConfirmButton: false,
@@ -386,7 +386,7 @@ export class AddSubCategoryComponent implements OnInit {
   }
 
   static addSuccess() {
-    swal({
+     swal.fire({
       type: 'success',
       title: 'Success! <br> Sub Category added successfully',
       showConfirmButton: false,
@@ -396,7 +396,7 @@ export class AddSubCategoryComponent implements OnInit {
   }
 
   static addError() {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Oops! <br> Failed to add sub category!',
       showConfirmButton: false,
@@ -518,7 +518,7 @@ export class EditCategoryComponent implements OnInit {
 
 
   static editSuccess() {
-    swal({
+     swal.fire({
       type: 'success',
       title: 'Success! <br> Category edited',
       showConfirmButton: false,
@@ -528,7 +528,7 @@ export class EditCategoryComponent implements OnInit {
   }
 
   static editError() {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Oops! <br> Failed to edit category!',
       showConfirmButton: false,
@@ -538,7 +538,7 @@ export class EditCategoryComponent implements OnInit {
   }
 
   static ImageUploadError() {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Oops! <br> Failed to Upload Image! Please Try Again!',
       showConfirmButton: false,
@@ -643,7 +643,7 @@ export class EditSubCategoryComponent implements OnInit {
   }
 
   static editSuccess() {
-    swal({
+     swal.fire({
       type: 'success',
       title: 'Success! <br> Sub Category edited',
       showConfirmButton: false,
@@ -653,7 +653,7 @@ export class EditSubCategoryComponent implements OnInit {
   }
 
   static editError() {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Oops! <br> Failed to edit sub category!',
       showConfirmButton: false,

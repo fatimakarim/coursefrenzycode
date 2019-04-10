@@ -64,13 +64,11 @@ export class CourseCheckoutComponent implements OnInit {
   // ]);
   expirydate;
   chek(val){
-    // this.expirydate=val.toString().slice(3,7);
+    
     this.expirydate=val.toString().slice(3,5);
-    console.log(this.expirydate,'jj')
+  
   }
   public mask=function(rawValue) {
-   
-    // add logic to generate your mask array  
     if (rawValue && rawValue.length > 0) {
         if (rawValue[0] == '0' || rawValue[5] == '1') {
             return [/[01]/, /[1-9]/, '/',  /[0-9]/, /[0123456789]/];
@@ -84,8 +82,6 @@ export class CourseCheckoutComponent implements OnInit {
   endRequest ;
   public ccvmask =[/[0-9]/, /\d/, /\d/];
   public cardmask =[/[0-9]/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/];
-
-  // import("c:/Users/Brain Plow/Documents/GitHub/coursefrenzy/node_modules/rxjs/Subscription").Subscription;
 
   constructor(private obj: UploadCoursesService,private obj_payment_service:PaymentmethodsService, private obj2: CourseCheckoutService, private global: GlobalService, private formBuilder: FormBuilder ) {
    
@@ -104,13 +100,12 @@ export class CourseCheckoutComponent implements OnInit {
     this.global.emptyCartGlobal$.subscribe(
       data => {
         this.emptyCart = data;
-        // alert(this.emptyCart);
+      
       });
 
   }
   totalcarts;
   ShowButton(var_type_atm) {
-    // this.cardtype = var_type_atm;
     if (var_type_atm == "American Express") {
      this.cardmask = [/[3]/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/]
      this.ccvmask=[/[0-9]/, /\d/, /\d/,/\d/]
@@ -130,13 +125,11 @@ export class CourseCheckoutComponent implements OnInit {
  
   getcart(){
     
-      // alert('calling Checkout Courses');
       this.obj2.get_checkout_courses().subscribe(response => {
         if(response.hasOwnProperty("status")) {
           this.emptyCart = response.status;
           this.GlobalCartCourses = [];
 
-          // alert('Checkout Courses are Empty')
         }
         else {
           this.GlobalCartCourses = response;
@@ -148,15 +141,7 @@ export class CourseCheckoutComponent implements OnInit {
     
   }
   ngOnInit() {
-    // this.obj2.get_checkout_courses().subscribe(response => {
-    //   this.GlobalCartCourses = response;
-    //   this.totalcarts=response.totalItems;
-    //   console.log('Checkout'+this.GlobalCartCourses);
-    //   this.global.getGolbalCartCourses(this.GlobalCartCourses);
-    
-    //   this.loaded = true;
-    // });
-    // this.show_Card_info();
+ 
     if(this.GlobalCartCourses.length > 0) {
       this.emptyCart = false;
     }
@@ -184,7 +169,7 @@ export class CourseCheckoutComponent implements OnInit {
   removeFromCart(index, course_id) {
     console.log(index);
     console.log(course_id);
-    swal({
+     swal.fire({
       title: 'Are you sure you want to remove this course from cart? <br> You will not be able to revert this!',
       type: 'question',
       showCancelButton: true,
@@ -212,7 +197,7 @@ export class CourseCheckoutComponent implements OnInit {
 
 
   static removeFromCartSuccess() {
-    swal({
+     swal.fire({
       type: 'success',
       title: 'Course Removed From Cart Successfully',
       showConfirmButton: false,
@@ -222,7 +207,7 @@ export class CourseCheckoutComponent implements OnInit {
   }
 
   static removeFromCartError() {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Oops <br> Failed to remove from cart!',
       // text: 'Failed to approve course!',
@@ -238,7 +223,6 @@ updefault;
 isright:boolean=false;
 set_default:boolean=false;
 Add_new(){
-  alert(this.set_default)
 if(this.set_default==true){
   this.isright=false;
 }else if(this.set_default==false){
@@ -247,12 +231,51 @@ this.isright=true;
 }
 }
 onSubmit() {
-  if(this.model.cardNumber){
-    this.obj2.add_payment(this.model.cardNumber.split('-').join(''), this.model.expirationdate.split('/').join(''), this.model.cardcod, this.model.amount,this.var_get_id,this.var_get_status,this.model.cardtype,this.model.holdername).subscribe();
-    console.log(this.model.cardNumber, this.model.expirationdate, this.model.cardcod, this.model.amount,this.var_get_id,this.var_get_status);
-  }else if(this.model.defaultcard){
-    this.obj2.add_payment(this.model.defaultcard.split('-').join(''), this.model.expirationdate.split('/').join(''), this.model.cardcod, this.model.amount,this.var_get_id,this.var_get_status,this.model.cardtype,this.model.holdername).subscribe();
-    console.log(this.model.cardNumber, this.model.expirationdate, this.model.cardcod, this.model.amount,this.var_get_id,this.var_get_status);
+  if(this.isright){
+    this.obj2.add_payment(this.isright,this.model.cardNumber.split('-').join(''), this.model.expirationdate.split('/').join(''), this.model.cardcod, this.model.amount,this.var_get_id,this.var_get_status,this.model.cardtype,this.model.holdername).subscribe( data => {
+     
+      if(data.status==false){
+         swal.fire({
+          type: 'error',
+          title: 'Oops <br> Something Went Worng!',
+          // text: 'Failed to approve course!',
+          showConfirmButton: false,
+          width: '512px',
+          timer: 2500
+        })
+      }else{
+         swal.fire({
+          type: 'success',
+          title: 'Payment Successfully Done',
+          showConfirmButton: false,
+          width: '512px',
+          timer: 2500
+        })
+      }
+    });
+    
+  }else if(!this.isright){
+    this.obj2.add_payment(this.isright,this.model.defaultcard, this.model.expirationdate, this.model.cardcod, this.model.amount,this.var_get_id,this.var_get_status,this.model.cardtype,this.model.holdername).subscribe(data => {
+      if(data.status==false){
+         swal.fire({
+          type: 'error',
+          title: 'Oops <br> Something Went Worng!',
+          // text: 'Failed to approve course!',
+          showConfirmButton: false,
+          width: '512px',
+          timer: 2500
+        })
+      }else{
+         swal.fire({
+          type: 'success',
+          title: 'Payment Successfully Done',
+          showConfirmButton: false,
+          width: '512px',
+          timer: 2500
+        })
+      }
+    });
+    
   }
  
 }

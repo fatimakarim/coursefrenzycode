@@ -5,9 +5,6 @@ import {EditHomeCoursesContentComponent, PopularCoursesComponent} from "./popula
 import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
 import {MatInputModule} from '@angular/material';
 import { MatDialogModule } from '@angular/material';
-// import {CoursesOnBidModule} from '../courses-all/courses-on-bid/courses-on-bid.module'
-import {AddCartDialogModule} from "../cart-dialog/add-cart-dialog.module";
-// import {BiddingDialogModule} from '../bidding-dialog/bidding-dialog.module';
 import {LoaderModule} from "../loader/loader.module";
 
 const popularCoursesRoutes: Routes = [
@@ -27,9 +24,7 @@ const popularCoursesRoutes: Routes = [
     ReactiveFormsModule,
     MatInputModule,
     MatDialogModule,
-    // BiddingDialogModule,
-    // CoursesOnBidModule,
-    AddCartDialogModule,
+    
     LoaderModule
   ],
 

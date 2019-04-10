@@ -74,7 +74,7 @@ export class PartnershipComponent implements OnInit {
 
 
   partnershipSuccess() {
-    swal({
+     swal.fire({
       type: 'success',
       title: 'Message Sent Successfully',
       text: 'We will get back to you soon!',

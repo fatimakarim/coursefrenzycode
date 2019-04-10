@@ -52,7 +52,7 @@ export class BecomeInstructorQuestionsComponent implements OnInit {
   }
 
   instructorSuccess() {
-    swal({
+     swal.fire({
       type: 'success',
       title: 'Congratulations <br> Now you can add your own courses on CourseFrenzy',
       width: '512px',

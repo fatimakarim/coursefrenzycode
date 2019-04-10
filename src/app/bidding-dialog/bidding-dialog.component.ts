@@ -39,14 +39,15 @@ export class BiddingDialogComponent implements OnInit {
   }
   err;
   add_bid_confirmation() {
-    swal({
+     swal.fire({
       title: 'Are you sure you want to add bid on this course? <br> You will not be able to revert this!',
       type: 'question',
       showCancelButton: true,
       width: '512px',
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, add it!'
+      confirmButtonText: 'Yes',
+      cancelButtonText:'No'
     }).then((result) => {
       if (result.value) {
         this.obj.add_bid(this.model.bid_amount, this.data.bid_id).subscribe(
@@ -62,7 +63,7 @@ export class BiddingDialogComponent implements OnInit {
 if(error.status == 403){
   this.err=error.json()
   console.log(this.err.bidamount ,this.err,'kkkkkk')
-  swal({
+   swal.fire({
     type: 'error',
     title: 'Bid Higher than ' + '$'+ this.err.bidamount,
     showConfirmButton: true,
@@ -78,7 +79,7 @@ if(error.status == 403){
   }
 
   BidSuccess() {
-    swal({
+     swal.fire({
       type: 'success',
       title: 'Added Bid Successfully',
       showConfirmButton: false,
@@ -88,7 +89,7 @@ if(error.status == 403){
   }
 
   // BidError() {
-  //   swal({
+  //    swal.fire({
   //     type: 'error',
   //     title: 'Error <br> Failed to add bid!',
   //     // text: 'Failed to approve course!',
@@ -100,7 +101,7 @@ if(error.status == 403){
   bidclosed()
   {
 
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Bid is Closed',
       showConfirmButton: false,

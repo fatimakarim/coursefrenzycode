@@ -21,7 +21,7 @@ export class SignUpservice {
 
   users_id;
   register_customer(username, email, Password) {
-    return this._http2.post( Config.api + 'register/',
+    return this._http2.post( Config.api + 'users/register/',
       {
         'username': username,
         'email': email,

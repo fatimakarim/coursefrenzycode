@@ -94,7 +94,7 @@ export class ContactUsComponent implements OnInit {
   }
 
   contactSuccess() {
-    swal({
+     swal.fire({
       type: 'success',
       title: 'Contact Request Sent Successfully',
       text: 'We will get back to you soon!',

@@ -57,7 +57,7 @@ export class FooterComponent implements OnInit {
 
   }
   static contactSuccess() {
-    swal({
+     swal.fire({
       type: 'success',
       title: 'Thanks For Subscription!',
       text: 'Now You will Recieve all Coursefrenzy news and letters!',

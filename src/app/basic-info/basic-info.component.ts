@@ -70,7 +70,7 @@ export class BasicInfoComponent implements OnInit {
 
   }
   static ImageUploadFailer() {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Oops! <br>Something Went Wrong Please try Again!',
       showConfirmButton: false,
@@ -79,7 +79,7 @@ export class BasicInfoComponent implements OnInit {
     })
   }
   static ProfileSuccess() {
-    swal({
+     swal.fire({
       type: 'success',
       title: 'Profile Updated Successfully! <br> You can Re-edit Your Profile any Time.',
       width: '512px',
@@ -88,7 +88,7 @@ export class BasicInfoComponent implements OnInit {
   }
 
   static ProfileFailure() {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Oops! <br>Failed to Update Profile.Incorrect Information!',
       showConfirmButton: false,

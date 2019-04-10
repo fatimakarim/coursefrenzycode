@@ -5,7 +5,6 @@ import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
 import {MatInputModule} from '@angular/material';
 import { MatDialogModule } from '@angular/material';
 import {WatchedCoursesComponent} from "./watched-courses.component";
-import {AddCartDialogModule} from "../cart-dialog/add-cart-dialog.module";
 import {LoaderModule} from "../loader/loader.module";
 
 const watchedCoursesRoutes: Routes = [
@@ -23,8 +22,7 @@ const watchedCoursesRoutes: Routes = [
     ReactiveFormsModule,
     MatInputModule,
     MatDialogModule,
-    // BiddingDialogModule,
-    AddCartDialogModule,
+    
     RouterModule.forChild(watchedCoursesRoutes),
     LoaderModule
   ],

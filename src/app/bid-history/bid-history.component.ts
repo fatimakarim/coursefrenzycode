@@ -65,6 +65,27 @@ export class BidHistoryComponent implements OnInit {
       data: { bid_id: this.BidId },
     });
   }
+  public emptyCart: boolean;
+  totalcarts;
+  getcart(){
+    
+      // alert('calling Checkout Courses');
+      this.obj2.get_checkout_courses().subscribe(response => {
+        if(response.hasOwnProperty("status")) {
+          this.emptyCart = response.status;
+          this.GlobalCartCourses = [];
+
+          // alert('Checkout Courses are Empty')
+        }
+        else {
+          this.GlobalCartCourses = response;
+          this.totalcarts=response.totalItems
+          this.global.getGolbalCartCourses(this.GlobalCartCourses);
+          this.emptyCart = false;
+        }
+      });
+   
+  }
   noPromo() {
     this.obj2.add_to_cart_no_promo(this.BidId).subscribe(
       data => {
@@ -76,7 +97,7 @@ export class BidHistoryComponent implements OnInit {
         }
         else {
           this.GlobalCartCourses.push(data[0]['json'].json());
-          this.global.getGolbalCartCourses(this.GlobalCartCourses);
+          this.getcart();
           // AddCartDialogComponent.CartSuccess();
           // this.dialogRef.close();
         }

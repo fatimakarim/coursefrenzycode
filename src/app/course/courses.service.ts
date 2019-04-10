@@ -4,7 +4,7 @@ import {Http, Headers, Response} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
 import {Router} from '@angular/router';
 import 'rxjs/add/operator/map';
-import {getDate} from 'ngx-bootstrap/bs-moment/utils/date-getters';
+// import {getDate} from 'ngx-bootstrap/bs-moment/utils/date-getters';
 import {Config} from '../Config';
 import {isPlatformBrowser} from '@angular/common';
 import {HttpService} from "../serv/http-service";
@@ -141,7 +141,14 @@ export class CoursesService {
       }
     });
   }
-
+  get_checkout_courses() {
+    const headers = new Headers();
+    if (isPlatformBrowser(this.platformId)) {
+      headers.append('Authorization', 'JWT ' + localStorage.getItem('Authorization'));
+    }
+    headers.append('Content-Type', 'application/json');
+    return this._http2.get(Config.api + 'courses/checkout/', {headers : headers}).map((response: Response) => response.json());
+  }
   add_to_cart_no_promo(course_id) {
     return this._http2.post(Config.api + 'courses/checkout/',
       {

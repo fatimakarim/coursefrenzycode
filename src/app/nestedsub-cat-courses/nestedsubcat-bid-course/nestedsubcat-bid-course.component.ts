@@ -125,7 +125,7 @@ export class NestedsubcatBidCourseComponent implements OnInit {
   
   
     static AlreadyInWishlistError() {
-      swal({
+       swal.fire({
         type: 'warning',
         title: 'Oops! <br> This course already exists in your wishlist!',
         showConfirmButton: false,
@@ -135,7 +135,7 @@ export class NestedsubcatBidCourseComponent implements OnInit {
     }
   
     static wishlistSuccess() {
-      swal({
+       swal.fire({
         type: 'success',
         title: 'Success! <br> Successfuly added to wishlist.',
         showConfirmButton: false,
@@ -160,7 +160,7 @@ export class NestedsubcatBidCourseComponent implements OnInit {
     }
   
     static Authenticat() {
-      swal({
+       swal.fire({
         type: 'error',
         title: 'Authentication Required <br> Please Login or Signup first',
         showConfirmButton: false,

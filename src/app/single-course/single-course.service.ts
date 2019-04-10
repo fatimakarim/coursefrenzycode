@@ -108,7 +108,7 @@ export class SingleCourseService {
         if (res.status === 201 || res.status === 202 ) {
           const responce_data = res.json();
           if(res.status === 202){
-            swal({
+             swal.fire({
               type: 'error',
               title: 'You Already Reviewed this Course.',
               showConfirmButton: false,
@@ -165,7 +165,7 @@ export class SingleCourseService {
         if (res.status === 202 || res.status === 201 ) {
           const responce_data = res.json();
           if(res.status === 201){
-            swal({
+             swal.fire({
               type: 'error',
               title: 'Course is Already Submit for review.',
               showConfirmButton: false,
@@ -266,7 +266,7 @@ export class SingleCourseService {
       {
         'course': course_id,
         'about_course': about_course,
-        'language': language,
+        'language': 'english',
         'lifetimeaccess': true,
         'description': description,
         // 'requirement': requirement,

@@ -11,7 +11,6 @@ import {SimpleGlobal} from "ng2-simple-global";
 import {HomeService} from "../home/home.service";
 import {CoursesService} from "../course/courses.service";
 import {CourseCheckoutService} from "../course-checkout/course-checkout.service";
-import {AddCartDialogComponent} from "../cart-dialog/add-cart-dialog.component";
 import {MatDialog} from "@angular/material";
 import {HomeComponent} from '../home/home.component';
 import {CoursesOnBidComponent} from '../courses-all/courses-on-bid/courses-on-bid.component';
@@ -97,10 +96,11 @@ public postedCoursesList:any;
         this.userRole = data;
         // alert('Checking Role in Header' + data);
       });
-    this.global2.Categories$.subscribe(
-      data => {
-        this.Categories = data;
-      });
+      this.global.Categories$.subscribe(
+        data => {
+          this.Categories = data;
+          console.log(this.Categories)
+        });
 
     this.global2.openSearch$.subscribe(
       data => {
@@ -165,34 +165,9 @@ public postedCoursesList:any;
   UserRole:any;
   totalcarts;
   ngOnInit() {
-    // this._home.get_role().subscribe(response => {
-    //   this.UserRole = response.Role;
-    //     alert(response.Role)
-    //     // alert('Geting DAta From Shared Service' + this.UserRole);
-    //   });
-    this.course.get_bid_courses(this.page).subscribe(response => {
-      this.BidCourses = response;
-    });
-
-    if (this.Logedin === '1'){
-      // alert('logedIn True');
-    }
-
-
-    // if(this.topOffer) {
-    //   $('.wrapp-content').addClass('offer');
-    // } else {
-    //   $('.wrapp-content').removeClass('offer');
-    // }
-
-    // this.Categories = this.global2.loadCategories();
-    this.obj.get_categories().subscribe(response => {
-      this.Categories = response;
-      // this.UserRole = this.getingRoleData.Role;
-      // alert('Home Role' + this.UserRole);
-      this.global2.getCategories(this.Categories);
-      this.loaded = true;
-    });
+   
+  
+  
 
     if (this.Logedin === '1') {
       this._home.get_role().subscribe(response => {
@@ -258,7 +233,7 @@ this.getcart();
       // });
     }
     else {
-      swal({
+       swal.fire({
         type: 'error',
         title: 'Authentication Required <br> Please Login or Signup first',
         showConfirmButton: false,
@@ -331,7 +306,7 @@ this.getcart();
 
 
   static AlreadyInWishlistError() {
-    swal({
+     swal.fire({
       type: 'warning',
       title: 'Oops! <br> This course already exists in your wishlist!',
       showConfirmButton: false,
@@ -341,13 +316,12 @@ this.getcart();
   }
 
   static wishlistSuccess() {
-    swal({
+     swal.fire({
       type: 'success',
       title: 'Success! <br> Successfuly added to wishlist.',
       showConfirmButton: false,
       width: '512px',
-      timer: 2000,
-      position: 'top-end'
+      timer: 2500,
     });
   }
 
@@ -405,7 +379,7 @@ this.getcart();
   }
 
   logSuccess() {
-    swal({
+     swal.fire({
       type: 'success',
       title: 'You have been successfully signed out from CourseFrenzy.',
       width: '512px',
@@ -418,7 +392,7 @@ onClick() {
     this.nav.navigate(['/mycourses']);
   }
   else {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Authentication Required <br> Please Login or Signup first',
       showConfirmButton: false,
@@ -474,26 +448,106 @@ onClick() {
   private Suggestions(query: any, number: number) {
   }
 
+  
 
   openCartDialog(index, course_id): void {
-    // if (this.Logedin === '1') {
-      const dialogRef = this.dialog.open(AddCartDialogComponent, {
-        width: '500px',
-        data: { course_id: course_id,
-                index: index
-          // CourseDetail: this.Courses
-        }
+    if (this.Logedin === '1') {
+      this.course.add_to_cart_no_promo(course_id).subscribe(
+        data => {
+          // console.log(data[0]['json'].json());
+          if(data[0]['json'].json().hasOwnProperty("status")) {
+         
+             swal.fire({
+              type: 'warning',
+              title: 'Oops! <br> This course already exists in your cart!',
+              showConfirmButton: false,
+              width: '512px',
+              timer: 2500
+            })
+          
+          } else {
+            this.wishlistCourses.splice(this.wishlistCourses.indexOf(this.wishlistCourses[index]),1);
+            this.getcart();
+
+             swal.fire({
+              type: 'success',
+              title: 'Success <br> Course Added to Cart!',
+              showConfirmButton: false,
+              width: '512px',
+              timer: 2500
+            })
+         
+            this.course.removeFromWishlist(course_id).subscribe(
+              data => {
+                console.log(data);
+                // this.wishlistCourses.splice(this.wishlistCourses.indexOf(this.wishlistCourses[index]),1);
+                // console.log(this.wishlistCourses);
+                // if (this.Logedin === '1') {
+                this.course.get_wishlist_courses(1).subscribe(response => {
+                  if(!response.status){
+  
+                  }
+                  if(response.hasOwnProperty("status")) {
+                    this.wishlistCourses = [];
+                    this.emptyWishlist = true;
+                  }
+                  else {
+                    this.wishlistCourses = response;
+                    // alert('total Wishlist Courses' + this.wishlistCourses.length);
+                    this.global.getGolbalWishListCourses(this.wishlistCourses);
+                    this.emptyWishlist = false;
+                  }
+  
+                });
+                // }
+              });
+          }
+  
+        },
+        error => {
+          // console.log(error);
+       
+             swal.fire({
+              type: 'error',
+              title: 'Oops <br> Failed to add to Cart!',
+              showConfirmButton: false,
+              width: '512px',
+              timer: 2500
+            })
+          }
+       
+      );
+  
+    } else {
+       swal.fire({
+        type: 'error',
+        title: 'Authentication Required <br> Please Login or Signup first',
+        showConfirmButton: false,
+        width: '512px',
+        timer: 1500
       });
-    // } else {
-    //   this.Authenticat();
-    //   this.nav.navigate(['login']);
-    // }
+      this.nav.navigate(['login']);
+    }
   }
+  // openCartDialog(index, course_id): void {
+  //   // if (this.Logedin === '1') {
+  //     const dialogRef = this.dialog.open(AddCartDialogComponent, {
+  //       width: '500px',
+  //       data: { course_id: course_id,
+  //               index: index
+  //         // CourseDetail: this.Courses
+  //       }
+  //     });
+  //   // } else {
+  //   //   this.Authenticat();
+  //   //   this.nav.navigate(['login']);
+  //   // }
+  // }
 
   removeFromWishlist(index, course_id) {
     console.log(index);
     console.log(course_id);
-    swal({
+     swal.fire({
       title: 'Are you sure you want to remove this course from wishlist? <br> You will not be able to revert this!',
       type: 'question',
       showCancelButton: true,
@@ -522,7 +576,7 @@ onClick() {
 
 
   static removeFromWishlistSuccess() {
-    swal({
+     swal.fire({
       type: 'success',
       title: 'Course Removed From Wishlist Successfully',
       showConfirmButton: false,
@@ -532,7 +586,7 @@ onClick() {
   }
 
   static removeFromWishlistError() {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Oops <br> Failed to remove from wishlist!',
       // text: 'Failed to approve course!',
@@ -546,7 +600,7 @@ onClick() {
   removeFromCart(index, course_id) {
     console.log(index);
     console.log(course_id);
-    swal({
+     swal.fire({
       title: 'Are you sure you want to remove this course from cart? <br> You will not be able to revert this!',
       type: 'question',
       showCancelButton: true,
@@ -573,7 +627,7 @@ onClick() {
 
 
   static removeFromCartSuccess() {
-    swal({
+     swal.fire({
       type: 'success',
       title: 'Course Removed From Cart Successfully',
       showConfirmButton: false,
@@ -583,7 +637,7 @@ onClick() {
   }
 
   static removeFromCartError() {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Oops <br> Failed to remove from cart!',
       // text: 'Failed to approve course!',

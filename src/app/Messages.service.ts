@@ -8,7 +8,7 @@ export class MessagesService  {
   }
 
   public static SuccessMessage(message): void {
-    swal({
+     swal.fire({
       type: 'success',
       title: 'Success! <br> '+ message,
       showConfirmButton: false,
@@ -18,7 +18,7 @@ export class MessagesService  {
   }
 
   public static ErrorMessage(message) {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Oops <br>'+ message,
       showConfirmButton: false,
@@ -27,7 +27,7 @@ export class MessagesService  {
     })
   }
   public static WarningMessage(message) {
-    swal({
+     swal.fire({
       type: 'warning',
       title: 'Oops! <br> '+ message,
       showConfirmButton: false,
@@ -36,7 +36,7 @@ export class MessagesService  {
     })
   }
   public static AuthenticatMessage() {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Authentication Required <br> Please Login or Signup first',
       showConfirmButton: false,

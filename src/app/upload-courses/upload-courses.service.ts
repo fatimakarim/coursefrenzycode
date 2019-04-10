@@ -8,7 +8,7 @@ import {HttpService} from "../serv/http-service";
 // import { AuthHttp, AuthConfig , JwtHelper } from 'angular2-jwt';
 // import {AlertService} from './_services/index';
 import 'rxjs/add/operator/map';
-import {getDate} from 'ngx-bootstrap/bs-moment/utils/date-getters';
+// import {getDate} from 'ngx-bootstrap/bs-moment/utils/date-getters';
 // import {log} from "util";
 import { Config} from '../Config';
 import {isPlatformBrowser} from '@angular/common';
@@ -357,7 +357,7 @@ export class UploadCoursesService {
   }
 
   BidCourseFailure() {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Oops! <br> Course not Approved by Admin  !',
       showConfirmButton: false,
@@ -366,7 +366,7 @@ export class UploadCoursesService {
     });
   }
   BidCourseFailure2() {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Oops! <br> Course is already posted !',
       showConfirmButton: false,
@@ -375,7 +375,7 @@ export class UploadCoursesService {
     });
   }
   // InvalidInformation() {
-  //   swal({
+  //    swal.fire({
   //     type: 'error',
   //     title: 'Oops! <br> Invalid Information!',
   //     showConfirmButton: false,
@@ -384,7 +384,7 @@ export class UploadCoursesService {
   //   })
   // }
   // BidCourseSuccess() {
-  //   swal({
+  //    swal.fire({
   //     type: 'success',
   //     title: 'Success! <br> Bid Allowed on Course!',
   //     showConfirmButton: false,

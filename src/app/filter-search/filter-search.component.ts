@@ -14,7 +14,6 @@ import {GlobalService} from '../global.service';
 import swal from 'sweetalert2';
 import {HeaderService} from '../header/header.service';
 import {SimpleGlobal} from 'ng2-simple-global';
-import {AddCartDialogComponent} from '../cart-dialog/add-cart-dialog.component';
 
 import {Observable} from 'rxjs/Observable';
 import {startWith} from 'rxjs/operators/startWith';
@@ -324,7 +323,7 @@ export class FilterSearchComponent  implements OnInit {
   }
 
   static Authenticat() {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Authentication Required <br> Please Login or Signup first',
       showConfirmButton: false,
@@ -355,7 +354,7 @@ export class FilterSearchComponent  implements OnInit {
 
 
   static AlreadyInWishlistError() {
-    swal({
+     swal.fire({
       type: 'warning',
       title: 'Oops! <br> This course already exists in your wishlist!',
       showConfirmButton: false,
@@ -365,7 +364,7 @@ export class FilterSearchComponent  implements OnInit {
   }
 
   static wishlistSuccess() {
-    swal({
+     swal.fire({
       type: 'success',
       title: 'Success! <br> Successfuly added to wishlist.',
       showConfirmButton: false,

@@ -101,7 +101,7 @@ export class AdminPanelComponent implements OnInit {
   add_course_confirmation(id, index) {
     // console.log(index);
     // console.log(this.pendingCoursesList['courses'][index]);
-    swal({
+     swal.fire({
       title: 'Are you sure you want to approve this course? <br> You will not be able to revert this!',
       // text: "You won't be able to revert this!",
       type: 'question',
@@ -122,7 +122,7 @@ export class AdminPanelComponent implements OnInit {
   reject_course_confirmation(id, index) {
     // console.log(index);
     // console.log(this.pendingCoursesList['courses'][index]);
-    swal({
+     swal.fire({
       title: 'Are you sure you want to reject this course? <br> You will not be able to revert this!',
       // text: "You won't be able to revert this!",
       type: 'question',
@@ -176,7 +176,7 @@ export class AdminPanelComponent implements OnInit {
   }
 
   approveSuccess() {
-    swal({
+     swal.fire({
       type: 'success',
       title: 'Approved Successfully <br> Course is added to approved courses list!',
       // showConfirmButton: false,
@@ -187,7 +187,7 @@ export class AdminPanelComponent implements OnInit {
 
 
   approveError() {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Error <br> Failed to approve course!',
       showConfirmButton: false,
@@ -240,7 +240,7 @@ export class RejectReasonDialog implements OnInit{
   }
 
   rejectSuccess() {
-    swal({
+     swal.fire({
       type: 'success',
       title: 'Rejected Successfully <br> Course is added to rejected courses list!',
       // showConfirmButton: false,
@@ -250,7 +250,7 @@ export class RejectReasonDialog implements OnInit{
   }
 
   rejectError() {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Error <br> Failed to reject course!',
       showConfirmButton: false,

@@ -39,7 +39,7 @@ export class AccountComponent implements OnInit {
     else {
       this.obj.change_password(this.model.password, this.model.newpassword1, this.model.newpassword2).subscribe(
         data => {
-          swal({
+           swal.fire({
             type: 'success',
             title: 'Your password has been successfully changed',
             showConfirmButton: false,
@@ -47,7 +47,7 @@ export class AccountComponent implements OnInit {
           })
         },
         error => {
-          swal({
+           swal.fire({
             type: 'error',
             title: 'Your old password has been incorrect!',
             showConfirmButton: false,
@@ -59,7 +59,7 @@ export class AccountComponent implements OnInit {
   }
 
   passwordMatch() {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Failed to change passwrod <br> Re-entered password does not match',
       showConfirmButton: false,

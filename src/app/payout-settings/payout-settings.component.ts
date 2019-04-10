@@ -172,7 +172,7 @@ export class PayoutSettingsComponent implements OnInit {
 
     if (this.updateForm.valid) {
       this.obj.updateCard(this.updateForm.value['ccv2'], this.date, this.updateForm.value['cardnickname2'], this.updateForm.value['check2'], id).subscribe(Data => {
-          swal({
+           swal.fire({
             type: 'success',
             title: 'Credit card details are updated!',
             showConfirmButton: false,
@@ -183,7 +183,7 @@ export class PayoutSettingsComponent implements OnInit {
         },
         error => {
           if (error.status == 400) {
-            swal({
+             swal.fire({
               type: 'error',
               title: 'Credit card details are not correct!',
               showConfirmButton: false,
@@ -191,14 +191,14 @@ export class PayoutSettingsComponent implements OnInit {
             })
           }
           else if (error.status == 500) {
-            swal(
+             swal.fire(
               'Sorry',
               'Server is under maintenance!',
               'error'
             )
           }
           else {
-            swal(
+             swal.fire(
               'Sorry',
               'Some thing went worrng!',
               'error'
@@ -207,7 +207,7 @@ export class PayoutSettingsComponent implements OnInit {
         })
     }
     else {
-      swal({
+       swal.fire({
         type: 'error',
         title: 'Credit card details are not correct!',
         showConfirmButton: false,
@@ -218,7 +218,7 @@ export class PayoutSettingsComponent implements OnInit {
   }
   deleteSingleCard(id) {
     this.obj.deleteCard(id).subscribe(Data => {
-        swal({
+         swal.fire({
           type: 'success',
           title: 'Credit card is deleted!',
           showConfirmButton: false,
@@ -228,7 +228,7 @@ export class PayoutSettingsComponent implements OnInit {
       },
       error => {
         if (error.status == 204) {
-          swal({
+           swal.fire({
             type: 'error',
             title: 'No credit card found!',
             showConfirmButton: false,
@@ -236,14 +236,14 @@ export class PayoutSettingsComponent implements OnInit {
           })
         }
         else if (error.status == 500) {
-          swal(
+           swal.fire(
             'Sorry',
             'Server is under maintenance!',
             'error'
           )
         }
         else {
-          swal(
+           swal.fire(
             'Sorry',
             'Some thing went worrng!',
             'error'
@@ -258,7 +258,7 @@ export class PayoutSettingsComponent implements OnInit {
       this.date = moment(this.date).format('YYYY-MM') + '-01';
 
       this.obj.addCard(this.form.value['cardnumber'], this.form.value['ccv'], this.date, this.form.value['cardnickname'], this.form.value['check']).subscribe(Data => {
-          swal({
+           swal.fire({
             type: 'success',
             title: 'Payment method is listed!',
             showConfirmButton: false,
@@ -268,7 +268,7 @@ export class PayoutSettingsComponent implements OnInit {
         },
         error => {
           if (error.status == 404) {
-            swal({
+             swal.fire({
               type: 'error',
               title: 'This card already exist!',
               showConfirmButton: false,
@@ -276,7 +276,7 @@ export class PayoutSettingsComponent implements OnInit {
             })
           }
           else if (error.status == 400) {
-            swal({
+             swal.fire({
               type: 'error',
               title: 'Please enter correct details!',
               showConfirmButton: false,
@@ -284,14 +284,14 @@ export class PayoutSettingsComponent implements OnInit {
             })
           }
           else if (error.status == 500) {
-            swal(
+             swal.fire(
               'Sorry',
               'Server is under maintenance!',
               'error'
             )
           }
           else {
-            swal(
+             swal.fire(
               'Sorry',
               'Some thing went worrng!',
               'error'
@@ -300,7 +300,7 @@ export class PayoutSettingsComponent implements OnInit {
         })
     }
     else {
-      swal({
+       swal.fire({
         type: 'error',
         title: 'Please enter correct details!',
         showConfirmButton: false,
@@ -314,7 +314,7 @@ export class PayoutSettingsComponent implements OnInit {
       },
       error => {
         if (error.status == 404) {
-          swal({
+           swal.fire({
             type: 'error',
             title: 'Credit card not found!',
             showConfirmButton: false,
@@ -322,7 +322,7 @@ export class PayoutSettingsComponent implements OnInit {
           })
         }
         else if (error.status == 500) {
-          swal(
+           swal.fire(
             'Sorry',
             'Server is under maintenance!',
             'error'

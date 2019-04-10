@@ -164,7 +164,7 @@ export class UploadCoursesComponent implements OnInit,OnDestroy {
   deletdeCourse(index, course_id) {
     // console.log(index);
     // console.log(course_id);
-    swal({
+     swal.fire({
       title: 'Are you sure you want to delete this course? <br> All Chapters and videos of this course will be deleted <br> You will not be able to revert this!',
       type: 'question',
       showCancelButton: true,
@@ -193,7 +193,7 @@ export class UploadCoursesComponent implements OnInit,OnDestroy {
 
 
   static deleteSuccess() {
-    swal({
+     swal.fire({
       type: 'success',
       title: 'Delete Request sent to admin',
       showConfirmButton: false,
@@ -203,7 +203,7 @@ export class UploadCoursesComponent implements OnInit,OnDestroy {
   }
 
   static deleteError() {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Oops! <br> Failed to send request',
       // text: 'Failed to approve course!',
@@ -604,7 +604,7 @@ export class AddCourseDialogComponent implements OnInit,OnDestroy {
   }
 
   static CourseSuccess() {
-    swal({
+     swal.fire({
       type: 'success',
       title: 'Course Added Successfully! <br> Request is sent to admin you will be notified after approval.',
       width: '512px',
@@ -613,7 +613,7 @@ export class AddCourseDialogComponent implements OnInit,OnDestroy {
   }
 
   static CourseFailure() {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Oops! <br>Failed to add course. Inccorrect Information!',
       showConfirmButton: false,
@@ -623,7 +623,7 @@ export class AddCourseDialogComponent implements OnInit,OnDestroy {
   }
 
   static greaterDiscout() {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Please review form! <br>Discount amount can not be greater than course price!',
       // showConfirmButton: false,
@@ -1019,7 +1019,7 @@ console.log(this.course_id, this.model.FirstName, this.model.Price, this.course_
   }
 
   static CourseSuccess() {
-    swal({
+     swal.fire({
       type: 'success',
       title: 'Course Edited Successfully! <br> Request is sent to admin you will be notified after approval.',
       width: '512px'
@@ -1027,7 +1027,7 @@ console.log(this.course_id, this.model.FirstName, this.model.Price, this.course_
   }
 
   static CourseFailure() {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Oops! <br>Failed to add course. Inccorrect Information!',
       showConfirmButton: false,
@@ -1037,7 +1037,7 @@ console.log(this.course_id, this.model.FirstName, this.model.Price, this.course_
   }
 
   static ImageUploadFailer() {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Oops! <br>Something Went Wrong Please try Again!',
       showConfirmButton: false,
@@ -1047,7 +1047,7 @@ console.log(this.course_id, this.model.FirstName, this.model.Price, this.course_
   }
 
   static greaterDiscout() {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Please review form! <br>Discount amount can not be greater than course price!',
       // showConfirmButton: false,
@@ -1157,7 +1157,7 @@ export class CourseBidComponent implements OnInit {
   }
 
   static BidCourseSuccess() {
-    swal({
+     swal.fire({
       type: 'success',
       title: 'Success! <br> Bid Allowed on Course!',
       showConfirmButton: false,
@@ -1166,7 +1166,7 @@ export class CourseBidComponent implements OnInit {
     });
   }
   // static InvalidInformation() {
-  //   swal({
+  //    swal.fire({
   //     type: 'error',
   //     title: 'Oops! <br> Invalid Information!',
   //     showConfirmButton: false,
@@ -1175,7 +1175,7 @@ export class CourseBidComponent implements OnInit {
   //   })
   // }
   // static BidCourseFailure() {
-  //   swal({
+  //    swal.fire({
   //     type: 'error',
   //     title: 'Oops! <br> Course not Approved by Admin !',
   //     showConfirmButton: false,
@@ -1184,7 +1184,7 @@ export class CourseBidComponent implements OnInit {
   //   })
   // }
   // static BidCourseFailure2() {
-  //   swal({
+  //    swal.fire({
   //     type: 'error',
   //     title: 'Oops! <br> Course is already posted !',
   //     showConfirmButton: false,

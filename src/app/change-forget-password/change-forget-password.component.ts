@@ -14,8 +14,7 @@ export class ChangeForgetPasswordComponent implements OnInit {
   public captcha: boolean = false;
   private link: string;
   private sub: Subscription;
-  hide = 'Hide';
-  hide2 = 'Hide';
+  hide = true;
 
   password_regex = '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$';
 
@@ -75,7 +74,7 @@ export class ChangeForgetPasswordComponent implements OnInit {
     }
   }
   static showSuccess() {
-    swal({
+     swal.fire({
       type: 'success',
       title: 'Congratulations! <br> Your CourseFrenzy Account Password Changed Successfully! ',
       width: '512px',
@@ -84,7 +83,7 @@ export class ChangeForgetPasswordComponent implements OnInit {
   }
 
   static showFailure(message) {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Oops! <br> Failed to Change Password Due to ' + message,
       showConfirmButton: false,
@@ -93,7 +92,7 @@ export class ChangeForgetPasswordComponent implements OnInit {
     })
   }
   static PasswordMissMatch() {
-    swal({
+     swal.fire({
       type: 'error',
       title: "Oops! <br> Conform Password did't match with current password ",
       showConfirmButton: false,

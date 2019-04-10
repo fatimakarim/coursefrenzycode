@@ -111,7 +111,7 @@ export class LoginComponent implements OnInit {
   //   // alert('recap'+this.captcha);
   // }
   static showSuccess() {
-    swal({
+     swal.fire({
       type: 'success',
       title: 'Login Successful <br> Welcome to CourseFrenzy!',
       // text: 'Welcome to CourseFrenzy!',
@@ -122,7 +122,7 @@ export class LoginComponent implements OnInit {
   }
 
   static LoginError() {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Failed to Login <br> Incorrect Credentials!',
       width: '512px',
@@ -199,7 +199,7 @@ export class LoginComponent implements OnInit {
         },error => {
           console.log(error.status, 'masssssagaggggg')
           if (error.status == 404) {
-            swal({
+             swal.fire({
               type: 'error',
               title: 'First, Verify your email address to Sign In.',
               showConfirmButton: false,
@@ -208,7 +208,7 @@ export class LoginComponent implements OnInit {
             });
           }
           else if (error.status == 500) {
-            swal({
+             swal.fire({
               type: 'error',
               title: 'User Doesnot Exist!',
               showConfirmButton: false,
@@ -221,7 +221,7 @@ export class LoginComponent implements OnInit {
     }
     // else if(this.captcha.getResponse()== false){
     //
-    //   swal({
+    //    swal.fire({
     //     type: 'error',
     //     title: 'Please confirm you are not a robot!',
     //     showConfirmButton: false,
@@ -235,7 +235,7 @@ export class LoginComponent implements OnInit {
             // this.captcha.reset();
             // this.isequal = false;
             
-            swal({
+             swal.fire({
               type: 'error',
               title: 'Please confirm you are not a robot!',
               showConfirmButton: false,
@@ -362,7 +362,7 @@ export class ResetPasswordComponent {
   }
 
   static resetSuccess() {
-      swal({
+       swal.fire({
         type: 'success',
         title: 'Check Email! <br> Link sent on Email!',
         width: '512px',
@@ -371,7 +371,7 @@ export class ResetPasswordComponent {
   }
 
   static emailError() {
-    swal({
+     swal.fire({
       type: 'error',
       title: 'Oops <br> No account registered with this email',
       width: '512px',

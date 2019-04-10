@@ -11,15 +11,17 @@ import {AdminLayoutComponent} from './layouts/admin/admin-layout.component';
 //   import {InstructorModule} from './instructor/instructor.module';
 import { WinbidDialogComponent } from './winbid-dialog/winbid-dialog.component';
 
+import {HomeComponent} from "./home/home.component";
 
 
 const appRoutes: Routes = [
+  { path: '', component: HomeComponent },
   {
     path: '',
     component: NormalLayoutComponent,
     children: [
       { path: 'chatbox', loadChildren: './chatbox/chatbox.module#ChatboxModule'},
-      { path: '', loadChildren: './home/home.module#HomeModule' },
+     
       { path: 'login', loadChildren: './login/login.module#LoginModule' },
       { path: 'signup', loadChildren: './signup/signup.module#SignupModule' },
       { path: 'what-is-coursefrenzy', loadChildren: './about/about.module#AboutModule' },
@@ -75,6 +77,8 @@ const appRoutes: Routes = [
       { path: 'users/conform-subscription/:link', loadChildren: './subscription-confirmation/subscription-confirmation.module#SubscriptionConfirmationModule' },
       {path : 'winbid', loadChildren: './winbid/winbid.module#WinbidModule'},
       {path : 'winbidUser', loadChildren: './winbid-user/winbid-user.module#WinbidUserModule'},
+      {path : 'accept-offer-activity', loadChildren: './accept-offer-activity/accept-offer-activity.module#AcceptOfferActivityModule'},
+
       { path: 'bid-courses', loadChildren: './courses-all/courses-on-bid/courses-on-bid.module#CoursesOnBidModule' },
 
     ]
